@@ -231,7 +231,7 @@ export default function Contact() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="lg:col-span-7 bg-[#0a0a0a] border border-neutral-800/80 rounded-2xl p-8 shadow-2xl"
+            className="lg:col-span-7 bg-[#0a0a0a] border border-neutral-800/80 rounded-2xl p-5 sm:p-8 shadow-2xl"
           >
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">

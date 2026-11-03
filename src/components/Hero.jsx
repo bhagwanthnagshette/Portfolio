@@ -86,17 +86,17 @@ export default function Hero() {
           </div>
 
           {/* Quick Meta Stats */}
-          <div className="pt-8 flex items-center justify-center lg:justify-start gap-8 text-neutral-400 text-xs uppercase tracking-wider">
+          <div className="pt-8 flex flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-8 text-neutral-400 text-xs uppercase tracking-wider">
             <div>
               <span className="block text-xl font-bold text-white">Python</span>
               <span>Django & Flask</span>
             </div>
-            <div className="w-px h-8 bg-neutral-800" />
+            <div className="hidden sm:block w-px h-8 bg-neutral-800" />
             <div>
               <span className="block text-xl font-bold text-white">Full Stack</span>
               <span>React & MySQL</span>
             </div>
-            <div className="w-px h-8 bg-neutral-800" />
+            <div className="hidden sm:block w-px h-8 bg-neutral-800" />
             <div>
               <span className="block text-xl font-bold text-white">Bengaluru</span>
               <span>{personalInfo.location}</span>
@@ -109,9 +109,9 @@ export default function Hero() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="lg:col-span-5 flex justify-center"
+          className="lg:col-span-5 flex justify-center w-full"
         >
-          <div className="w-full max-w-md rounded-2xl bg-[#0a0a0a] border border-neutral-800 shadow-2xl p-5 text-left font-mono text-xs text-neutral-300 animate-[float_6s_ease-in-out_infinite]">
+          <div className="w-full max-w-md rounded-2xl bg-[#0a0a0a] border border-neutral-800 shadow-2xl p-4 sm:p-5 text-left font-mono text-xs text-neutral-300 animate-[float_6s_ease-in-out_infinite] overflow-hidden">
             {/* Terminal Header */}
             <div className="flex items-center justify-between pb-4 border-b border-neutral-800/80 mb-4">
               <div className="flex items-center space-x-2">
