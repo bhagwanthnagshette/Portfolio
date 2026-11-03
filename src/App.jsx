@@ -3,6 +3,7 @@ import Hero from './components/Hero'
 import About from './components/About'
 import Skills from './components/Skills'
 import Process from './components/Process'
+import Projects from './components/Projects'
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <About />
         <Skills />
         <Process />
+        <Projects />
       </main>
     </div>
   )
