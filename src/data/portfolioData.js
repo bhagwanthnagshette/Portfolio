@@ -89,7 +89,7 @@ export const internshipsList = [
   {
     organization: "TAP Academy",
     role: "Full Stack Python Developer",
-    duration: "2024 - Present",
+    duration: "Present",
     skills: [
       "Mastered core Python, OOP, data structures, and exception handling",
       "Gained hands-on experience developing interactive GUI applications with Pygame",
