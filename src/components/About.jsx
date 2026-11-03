@@ -33,15 +33,15 @@ export default function About() {
             transition={{ duration: 0.7 }}
             className="lg:col-span-5 flex justify-center"
           >
-            <div className="relative group">
-              {/* Decorative Accent Background Box */}
+            <div className="relative group w-full max-w-md">
+              {/* Decorative Accent Background Glow */}
               <div className="absolute -inset-2 bg-gradient-to-tr from-[#ff2a2a] to-black rounded-3xl opacity-20 blur-lg group-hover:opacity-30 transition-opacity" />
 
-              <div className="relative w-72 sm:w-80 h-72 sm:h-80 rounded-2xl overflow-hidden border-4 border-black bg-neutral-950 shadow-2xl flex items-center justify-center">
+              <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden border-4 border-black bg-neutral-950 shadow-2xl flex items-center justify-center">
                 <img
                   src={profileImg}
                   alt={personalInfo.name}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
                 />
 
                 {/* Training Badge Overlay */}
