@@ -1,6 +1,8 @@
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
+import Skills from './components/Skills'
+import Process from './components/Process'
 
 function App() {
   return (
@@ -9,6 +11,8 @@ function App() {
       <main>
         <Hero />
         <About />
+        <Skills />
+        <Process />
       </main>
     </div>
   )
