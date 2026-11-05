@@ -1,341 +1,292 @@
-import { useState } from 'react'
-import { motion } from 'framer-motion'
-import emailjs from '@emailjs/browser'
-import { personalInfo, socialLinks, emailjsConfig } from '../data/portfolioData'
+import { useRef, useState } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import { emailjsConfig, personalInfo, socialLinks } from '../data/portfolioData'
 
 export default function Contact() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
-  })
-  const [status, setStatus] = useState({
-    submitting: false,
-    success: false,
-    error: null,
-  })
+  const ref = useRef(null)
+  const formRef = useRef(null)
+  const [status, setStatus] = useState('idle') // 'idle' | 'sending' | 'success' | 'error'
 
-  const handleChange = (e) => {
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
-  }
+  // Parallax background text
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ['start end', 'end start'],
+  })
+  const y = useTransform(scrollYProgress, [0, 1], ['-20%', '30%'])
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setStatus({ submitting: true, success: false, error: null })
+    if (status === 'sending') return
 
-    // Check if EmailJS credentials are configured in environment
-    const isConfigured =
-      emailjsConfig.serviceId &&
-      !emailjsConfig.serviceId.includes('YOUR_') &&
-      emailjsConfig.templateId &&
-      !emailjsConfig.templateId.includes('YOUR_')
+    setStatus('sending')
+
+    const form = formRef.current
+    if (!form) return
+
+    const firstName = form.querySelector('#firstName')?.value?.trim() || ''
+    const lastName = form.querySelector('#lastName')?.value?.trim() || ''
+    const email = form.querySelector('#email')?.value?.trim() || ''
+    const message = form.querySelector('#message')?.value?.trim() || ''
+
+    if (!firstName || !email || !message) {
+      setStatus('error')
+      setTimeout(() => setStatus('idle'), 3000)
+      return
+    }
+
+    const { serviceId, templateId, publicKey } = emailjsConfig
+    const isConfigured = Boolean(
+      serviceId &&
+        templateId &&
+        publicKey &&
+        serviceId !== 'YOUR_EMAILJS_SERVICE_ID' &&
+        templateId !== 'YOUR_EMAILJS_TEMPLATE_ID' &&
+        publicKey !== 'YOUR_EMAILJS_PUBLIC_KEY'
+    )
 
     if (!isConfigured) {
-      // Fallback: trigger user's native mail client
-      const mailtoLink = `mailto:${personalInfo.emails.primary}?subject=${encodeURIComponent(
-        formData.subject || 'Portfolio Inquiry'
-      )}&body=${encodeURIComponent(
-        `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
-      )}`
-      window.location.href = mailtoLink
-      setStatus({
-        submitting: false,
-        success: true,
-        error: null,
-      })
-      setFormData({ name: '', email: '', subject: '', message: '' })
+      window.open(
+        `mailto:${personalInfo.emails.primary}?subject=${encodeURIComponent(
+          `Portfolio Contact from ${firstName} ${lastName}`
+        )}&body=${encodeURIComponent(
+          `From: ${firstName} ${lastName}\nEmail: ${email}\n\n${message}`
+        )}`,
+        '_blank'
+      )
+      setStatus('success')
+      form.reset()
+      setTimeout(() => setStatus('idle'), 3000)
       return
     }
 
     try {
-      await emailjs.send(
-        emailjsConfig.serviceId,
-        emailjsConfig.templateId,
-        {
-          from_name: formData.name,
-          from_email: formData.email,
-          subject: formData.subject,
-          message: formData.message,
-        },
-        emailjsConfig.publicKey
-      )
-      setStatus({ submitting: false, success: true, error: null })
-      setFormData({ name: '', email: '', subject: '', message: '' })
-    } catch {
-      setStatus({
-        submitting: false,
-        success: false,
-        error: 'Failed to send message. Please reach out directly via email.',
-      })
+      const emailjs = await import('@emailjs/browser')
+      await emailjs.sendForm(serviceId, templateId, form, publicKey)
+      setStatus('success')
+      form.reset()
+    } catch (err) {
+      console.error(err)
+      setStatus('error')
     }
+
+    setTimeout(() => setStatus('idle'), 4000)
   }
 
   return (
     <section
+      ref={ref}
       id="contact"
-      className="py-24 bg-black text-white relative overflow-hidden border-t border-neutral-900"
+      className="bg-[#0a0a0a] w-full min-h-screen relative overflow-hidden flex items-end pt-32 border-t border-gray-900"
     >
-      {/* Background Accent Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-[#ff2a2a]/10 rounded-full blur-3xl pointer-events-none" />
+      {/* Behind: Parallax giant Contact background */}
+      <motion.div
+        style={{ y }}
+        className="absolute inset-x-0 top-10 pointer-events-none z-0 flex justify-center overflow-hidden"
+      >
+        <div
+          className="text-[25vw] leading-[0.75] font-black uppercase tracking-tighter select-none scale-y-[1.6] origin-top text-white/5"
+          style={{ fontFamily: "'Impact', 'Arial Black', sans-serif" }}
+        >
+          Contact
+        </div>
+      </motion.div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800 text-xs font-semibold text-neutral-300 tracking-wider uppercase">
-            <span className="w-2 h-2 rounded-full bg-[#ff2a2a]" />
-            Get In Touch
-          </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white">
-            Let&apos;s Connect &amp; Collaborate
-          </h2>
-          <p className="text-sm sm:text-base text-neutral-400">
-            Have a project in mind, an opportunity to discuss, or just want to say hi? Reach out anytime!
-          </p>
+      {/* In front: Red Card aligned to the right */}
+      <div
+        data-aos="fade-up"
+        className="bg-[#ff2a2a] w-full md:w-[85%] lg:w-[75%] p-8 md:p-16 ml-auto rounded-tl-3xl shadow-2xl relative z-10 text-white"
+      >
+        {/* Header row */}
+        <div className="flex flex-wrap items-center justify-between gap-4 pb-8 border-b border-white/20">
+          <span className="text-xs uppercase font-mono font-bold tracking-[0.2em] text-white/90">
+            Reach Me
+          </span>
+          {socialLinks.instagram ? (
+            <a
+              href={socialLinks.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/30 text-xs font-semibold text-white hover:bg-white hover:text-[#ff2a2a] transition-all duration-300"
+            >
+              DM on Instagram &rarr;
+            </a>
+          ) : (
+            <a
+              href={`mailto:${personalInfo.emails.primary}`}
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/30 text-xs font-semibold text-white hover:bg-white hover:text-[#ff2a2a] transition-all duration-300"
+            >
+              Email Directly &rarr;
+            </a>
+          )}
         </div>
 
-        {/* Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          {/* Left Column: Direct Contact Info & Socials */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="lg:col-span-5 space-y-6"
-          >
-            <div className="space-y-4">
-              {/* Email Card */}
-              <a
-                href={`mailto:${personalInfo.emails.primary}`}
-                className="p-5 rounded-2xl bg-[#0a0a0a] border border-neutral-800/80 hover:border-[#ff2a2a]/50 transition-all duration-300 flex items-center gap-4 group block"
-              >
-                <div className="w-12 h-12 rounded-xl bg-neutral-900 flex items-center justify-center text-[#ff2a2a] group-hover:scale-110 transition-transform">
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                    />
-                  </svg>
-                </div>
-                <div>
-                  <p className="text-xs uppercase font-mono text-neutral-500 font-semibold">
-                    Email
-                  </p>
-                  <p className="text-sm sm:text-base font-bold text-white group-hover:text-[#ff2a2a] transition-colors break-all">
-                    {personalInfo.emails.primary}
-                  </p>
-                </div>
-              </a>
-
-              {/* Phone Card */}
-              <a
-                href={`tel:${personalInfo.phone}`}
-                className="p-5 rounded-2xl bg-[#0a0a0a] border border-neutral-800/80 hover:border-[#ff2a2a]/50 transition-all duration-300 flex items-center gap-4 group block"
-              >
-                <div className="w-12 h-12 rounded-xl bg-neutral-900 flex items-center justify-center text-[#ff2a2a] group-hover:scale-110 transition-transform">
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-                    />
-                  </svg>
-                </div>
-                <div>
-                  <p className="text-xs uppercase font-mono text-neutral-500 font-semibold">
-                    Phone
-                  </p>
-                  <p className="text-sm sm:text-base font-bold text-white group-hover:text-[#ff2a2a] transition-colors">
-                    {personalInfo.phone}
-                  </p>
-                </div>
-              </a>
-
-              {/* Location Card */}
-              <div className="p-5 rounded-2xl bg-[#0a0a0a] border border-neutral-800/80 flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-neutral-900 flex items-center justify-center text-[#ff2a2a]">
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  </svg>
-                </div>
-                <div>
-                  <p className="text-xs uppercase font-mono text-neutral-500 font-semibold">
-                    Location
-                  </p>
-                  <p className="text-sm sm:text-base font-bold text-white">
-                    {personalInfo.location}
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Social Links */}
-            <div className="pt-2">
-              <p className="text-xs uppercase font-mono text-neutral-500 font-bold mb-3">
-                Connect Online
-              </p>
-              <div className="flex items-center gap-3">
-                <a
-                  href={socialLinks.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-4 py-2.5 rounded-xl bg-neutral-900 border border-neutral-800 hover:border-[#ff2a2a] text-sm font-semibold text-neutral-200 hover:text-white transition-all duration-200 flex items-center gap-2"
-                >
-                  GitHub
-                </a>
-                <a
-                  href={socialLinks.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-4 py-2.5 rounded-xl bg-neutral-900 border border-neutral-800 hover:border-[#ff2a2a] text-sm font-semibold text-neutral-200 hover:text-white transition-all duration-200 flex items-center gap-2"
-                >
-                  LinkedIn
-                </a>
-              </div>
-            </div>
-          </motion.div>
-
-          {/* Right Column: Interactive Contact Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="lg:col-span-7 bg-[#0a0a0a] border border-neutral-800/80 rounded-2xl p-5 sm:p-8 shadow-2xl"
-          >
-            <form onSubmit={handleSubmit} className="space-y-5">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="block text-xs font-semibold text-neutral-400 mb-2 uppercase tracking-wider"
-                  >
-                    Your Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    required
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="e.g. John Doe"
-                    className="w-full px-4 py-3 rounded-lg bg-neutral-950 border border-neutral-800 text-white placeholder-neutral-600 focus:outline-none focus:border-[#ff2a2a] transition-colors text-sm"
-                  />
-                </div>
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-xs font-semibold text-neutral-400 mb-2 uppercase tracking-wider"
-                  >
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="john@example.com"
-                    className="w-full px-4 py-3 rounded-lg bg-neutral-950 border border-neutral-800 text-white placeholder-neutral-600 focus:outline-none focus:border-[#ff2a2a] transition-colors text-sm"
-                  />
-                </div>
-              </div>
-
+        {/* Contact Form */}
+        <form
+          ref={formRef}
+          onSubmit={handleSubmit}
+          className="flex flex-col gap-12 mt-12"
+        >
+          {/* Two-column inputs grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+            {/* Left Column: Underline-only inputs */}
+            <div className="flex flex-col gap-8">
               <div>
-                <label
-                  htmlFor="subject"
-                  className="block text-xs font-semibold text-neutral-400 mb-2 uppercase tracking-wider"
-                >
-                  Subject
-                </label>
                 <input
                   type="text"
-                  id="subject"
-                  name="subject"
+                  id="firstName"
+                  name="first_name"
                   required
-                  value={formData.subject}
-                  onChange={handleChange}
-                  placeholder="Opportunity / Collaboration / Project"
-                  className="w-full px-4 py-3 rounded-lg bg-neutral-950 border border-neutral-800 text-white placeholder-neutral-600 focus:outline-none focus:border-[#ff2a2a] transition-colors text-sm"
+                  placeholder="First Name *"
+                  className="w-full bg-transparent border-b border-white/40 pb-3 text-lg placeholder-white/80 focus:border-white focus:outline-none text-white transition-colors"
                 />
               </div>
 
               <div>
-                <label
-                  htmlFor="message"
-                  className="block text-xs font-semibold text-neutral-400 mb-2 uppercase tracking-wider"
-                >
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={4}
-                  required
-                  value={formData.message}
-                  onChange={handleChange}
-                  placeholder="Tell me about your project or opportunity..."
-                  className="w-full px-4 py-3 rounded-lg bg-neutral-950 border border-neutral-800 text-white placeholder-neutral-600 focus:outline-none focus:border-[#ff2a2a] transition-colors text-sm resize-none"
+                <input
+                  type="text"
+                  id="lastName"
+                  name="last_name"
+                  placeholder="Last Name"
+                  className="w-full bg-transparent border-b border-white/40 pb-3 text-lg placeholder-white/80 focus:border-white focus:outline-none text-white transition-colors"
                 />
               </div>
 
-              {/* Status Notifications */}
-              {status.success && (
-                <div className="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-medium">
-                  &check; Thank you! Your message has been sent successfully.
-                </div>
-              )}
-              {status.error && (
-                <div className="p-3 rounded-lg bg-[#ff2a2a]/10 border border-[#ff2a2a]/30 text-[#ff2a2a] text-xs font-medium">
-                  {status.error}
-                </div>
+              <div>
+                <input
+                  type="email"
+                  id="email"
+                  name="user_email"
+                  required
+                  placeholder="Email Address *"
+                  className="w-full bg-transparent border-b border-white/40 pb-3 text-lg placeholder-white/80 focus:border-white focus:outline-none text-white transition-colors"
+                />
+              </div>
+            </div>
+
+            {/* Right Column: Textarea */}
+            <div className="flex flex-col">
+              <textarea
+                id="message"
+                name="message"
+                required
+                rows={5}
+                placeholder="Your Message *"
+                className="w-full h-full bg-transparent border-b border-white/40 pb-3 text-lg placeholder-white/80 focus:border-white focus:outline-none text-white transition-colors resize-none min-h-[120px]"
+              />
+            </div>
+          </div>
+
+          {/* Bottom Section */}
+          <div className="space-y-6 pt-4 border-t border-white/20">
+            {/* Permission Checkbox */}
+            <div className="flex items-start gap-3">
+              <input
+                type="checkbox"
+                id="permission"
+                required
+                defaultChecked
+                className="mt-1 w-4 h-4 rounded accent-black cursor-pointer"
+              />
+              <label
+                htmlFor="permission"
+                className="text-xs text-white/90 leading-relaxed cursor-pointer select-none"
+              >
+                I agree that my submitted data is being collected and processed to respond to my inquiry.
+              </label>
+            </div>
+
+            {/* Response Note & Urgent Contact Link */}
+            <div className="text-xs text-white/80 space-y-1">
+              <p>
+                Your message will be sent directly to my inbox. I typically respond within 24-48 hours.
+              </p>
+              <p>
+                Need an urgent response? Email directly at{' '}
+                <a
+                  href={`mailto:${personalInfo.emails.primary}`}
+                  className="underline font-bold text-white hover:text-black transition-colors"
+                >
+                  {personalInfo.emails.primary}
+                </a>
+              </p>
+            </div>
+
+            {/* Submit Button */}
+            <div className="pt-2">
+              {status === 'sending' && (
+                <button
+                  type="button"
+                  disabled
+                  className="inline-flex items-center gap-3 px-8 py-4 rounded-full border border-white/40 bg-white/20 text-white/70 font-bold text-base cursor-not-allowed"
+                >
+                  <svg
+                    className="animate-spin w-5 h-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                    />
+                  </svg>
+                  Sending...
+                </button>
               )}
 
-              {/* Submit Button */}
-              <button
-                type="submit"
-                disabled={status.submitting}
-                className="w-full sm:w-auto px-8 py-3.5 rounded-lg bg-[#ff2a2a] hover:bg-[#e02020] text-white font-bold text-sm transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-[#ff2a2a]/20"
-              >
-                {status.submitting ? 'Sending Message...' : 'Send Message'}
-              </button>
-            </form>
-          </motion.div>
-        </div>
+              {status === 'success' && (
+                <button
+                  type="button"
+                  disabled
+                  className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-emerald-600 text-white font-bold text-base shadow-lg"
+                >
+                  Sent Successfully ✓
+                </button>
+              )}
+
+              {status === 'error' && (
+                <button
+                  type="submit"
+                  className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-red-950 border border-white text-white font-bold text-base hover:bg-black transition-colors"
+                >
+                  Failed — Try Again
+                </button>
+              )}
+
+              {status === 'idle' && (
+                <button
+                  type="submit"
+                  className="group inline-flex items-center gap-3 px-8 py-4 rounded-full border-2 border-white text-white font-bold text-base hover:bg-white hover:text-[#ff2a2a] transition-all duration-300 shadow-xl"
+                >
+                  <span>Send Message</span>
+                  <svg
+                    className="w-5 h-5 transform group-hover:translate-x-1.5 transition-transform duration-300"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M14 5l7 7m0 0l-7 7m7-7H3"
+                    />
+                  </svg>
+                </button>
+              )}
+            </div>
+          </div>
+        </form>
       </div>
     </section>
   )
 }
-
