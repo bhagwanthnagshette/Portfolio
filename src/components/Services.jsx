@@ -29,7 +29,7 @@ function TagCard({
       data-aos-delay={aosDelay}
       className={`w-72 sm:w-80 rounded-[2rem] p-2 transition-colors duration-700 md:absolute ${className} ${
         isActive
-          ? 'bg-[#ff2a2a] shadow-[0_0_35px_rgba(255,42,42,0.4)]'
+          ? 'bg-[#0F7663] shadow-[0_0_35px_rgba(34,211,238,0.35)]'
           : 'bg-white shadow-xl'
       }`}
     >
@@ -39,13 +39,13 @@ function TagCard({
       {/* Inner rounded panel */}
       <div
         className={`mt-8 p-8 min-h-[220px] rounded-[1.5rem] transition-colors duration-700 flex flex-col justify-between ${
-          isActive ? 'bg-red-700/50 text-white' : 'bg-[#f4f4f4] text-neutral-600'
+          isActive ? 'bg-[#0A4D40] text-white' : 'bg-[#f4f4f4] text-neutral-600'
         }`}
       >
         <div>
           <span
             className={`text-3xl font-serif italic mb-2 block ${
-              isActive ? 'text-white' : 'text-neutral-400'
+              isActive ? 'text-[#22D3EE]' : 'text-neutral-400'
             }`}
           >
             {number}
@@ -129,7 +129,7 @@ export default function Services() {
         >
           {/* Badge */}
           <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-xs font-semibold text-neutral-700 tracking-wider uppercase mb-4">
-            <span className="w-2 h-2 rounded-full bg-[#ff2a2a]" />
+            <span className="w-2 h-2 rounded-full bg-[#0F7663]" />
             {skillsContent.badge}
           </span>
 

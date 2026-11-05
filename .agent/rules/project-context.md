@@ -1,5 +1,5 @@
 # Project context
-React 19 + Vite + Tailwind CSS 4 single-page developer portfolio. Plain JavaScript (JSX), no TypeScript, no router. Libraries: framer-motion, aos, @emailjs/browser. Style: Tailwind utility classes only (no extra CSS files except src/index.css). Colours: pure black / #0a0a0a dark sections, white sections for contrast, accent red #ff2a2a. Font: Inter.
+React 19 + Vite + Tailwind CSS 4 single-page developer portfolio. Plain JavaScript (JSX), no TypeScript, no router. Libraries: framer-motion, aos, @emailjs/browser. Style: Tailwind utility classes only (no extra CSS files except src/index.css). Colours: pure black / #0a0a0a dark sections, white sections for contrast, teal #0F7663 and accent cyan #22D3EE. Font: Inter.
 
 # Architecture rules
 - ALL content (text, links, lists) lives in src/data/portfolioData.js and is imported by components. Never hard-code personal content in components.

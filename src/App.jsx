@@ -17,10 +17,10 @@ function App() {
         VELOCITY_DISSIPATION={3}
         SPLAT_FORCE={3500}
         COLOR_UPDATE_SPEED={18}
-        COLOR="#ffffff"
+        COLOR="#22D3EE"
         RAINBOW_MODE={false}
       />
-      <div className="min-h-screen bg-black text-white font-sans antialiased selection:bg-[#ff2a2a] selection:text-white">
+      <div className="min-h-screen bg-black text-white font-sans antialiased selection:bg-[#22D3EE] selection:text-black">
         <Preloader />
         <Navbar />
         <main>

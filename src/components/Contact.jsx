@@ -91,10 +91,10 @@ export default function Contact() {
         </div>
       </motion.div>
 
-      {/* In front: Red Card aligned to the right */}
+      {/* In front: Teal Card aligned to the right */}
       <div
         data-aos="fade-up"
-        className="bg-[#ff2a2a] w-full md:w-[85%] lg:w-[75%] p-8 md:p-16 ml-auto rounded-tl-3xl shadow-2xl relative z-10 text-white"
+        className="bg-[#0F7663] w-full md:w-[85%] lg:w-[75%] p-8 md:p-16 ml-auto rounded-tl-3xl shadow-2xl relative z-10 text-white"
       >
         {/* Header row */}
         <div className="flex flex-wrap items-center justify-between gap-4 pb-8 border-b border-white/20">
@@ -106,14 +106,14 @@ export default function Contact() {
               href={socialLinks.instagram}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/30 text-xs font-semibold text-white hover:bg-white hover:text-[#ff2a2a] transition-all duration-300"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/30 text-xs font-semibold text-white hover:bg-[#22D3EE] hover:text-black hover:border-[#22D3EE] transition-all duration-300"
             >
               DM on Instagram &rarr;
             </a>
           ) : (
             <a
               href={`mailto:${personalInfo.emails.primary}`}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/30 text-xs font-semibold text-white hover:bg-white hover:text-[#ff2a2a] transition-all duration-300"
+              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/30 text-xs font-semibold text-white hover:bg-[#22D3EE] hover:text-black hover:border-[#22D3EE] transition-all duration-300"
             >
               Email Directly &rarr;
             </a>
@@ -185,7 +185,7 @@ export default function Contact() {
                 id="permission"
                 required
                 defaultChecked
-                className="mt-1 w-4 h-4 rounded accent-black cursor-pointer"
+                className="mt-1 w-4 h-4 rounded accent-[#22D3EE] cursor-pointer"
               />
               <label
                 htmlFor="permission"
@@ -204,7 +204,7 @@ export default function Contact() {
                 Need an urgent response? Email directly at{' '}
                 <a
                   href={`mailto:${personalInfo.emails.primary}`}
-                  className="underline font-bold text-white hover:text-black transition-colors"
+                  className="underline font-bold text-white hover:text-[#22D3EE] transition-colors"
                 >
                   {personalInfo.emails.primary}
                 </a>
@@ -256,7 +256,7 @@ export default function Contact() {
               {status === 'error' && (
                 <button
                   type="submit"
-                  className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-red-950 border border-white text-white font-bold text-base hover:bg-black transition-colors"
+                  className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-teal-950 border border-white text-white font-bold text-base hover:bg-black transition-colors"
                 >
                   Failed — Try Again
                 </button>
@@ -265,7 +265,7 @@ export default function Contact() {
               {status === 'idle' && (
                 <button
                   type="submit"
-                  className="group inline-flex items-center gap-3 px-8 py-4 rounded-full border-2 border-white text-white font-bold text-base hover:bg-white hover:text-[#ff2a2a] transition-all duration-300 shadow-xl"
+                  className="group inline-flex items-center gap-3 px-8 py-4 rounded-full border-2 border-white text-white font-bold text-base hover:bg-[#22D3EE] hover:text-black hover:border-[#22D3EE] hover:shadow-[0_0_25px_rgba(34,211,238,0.4)] transition-all duration-300 shadow-xl"
                 >
                   <span>Send Message</span>
                   <svg

@@ -13,10 +13,10 @@ export default function Preloader() {
   return (
     <AnimatePresence>
       {isLoading && (
-        // Red "shutter" panel — slides up on exit
+        // Teal "shutter" panel — slides up on exit
         <motion.div
           key="preloader"
-          className="fixed inset-0 w-full h-screen bg-[#ff2a2a] z-[100000] flex items-center justify-center"
+          className="fixed inset-0 w-full h-screen bg-[#0F7663] z-[100000] flex items-center justify-center"
           initial={{ y: 0 }}
           exit={{ y: '-100%' }}
           transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
@@ -27,8 +27,8 @@ export default function Preloader() {
             exit={{ opacity: 0, scale: 0.95, y: -20 }}
             transition={{ duration: 0.4 }}
           >
-            {/* Background "ghost" copy — dim red so it peeks through */}
-            <span className="text-red-900/30">
+            {/* Background "ghost" copy — dim teal so it peeks through */}
+            <span className="text-teal-950/40">
               {personalInfo.brandName}
               <span>.</span>
             </span>
@@ -42,7 +42,7 @@ export default function Preloader() {
               transition={{ duration: 1.6, ease: 'easeInOut', delay: 0.2 }}
             >
               {personalInfo.brandName}
-              <span className="text-black">.</span>
+              <span className="text-[#22D3EE]">.</span>
             </motion.span>
           </motion.div>
         </motion.div>

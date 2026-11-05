@@ -8,13 +8,13 @@ export default function Projects() {
       className="py-24 bg-black text-white relative overflow-hidden border-t border-neutral-900"
     >
       {/* Background Subtle Accent Glow */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[32rem] h-[32rem] bg-[#ff2a2a]/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[32rem] h-[32rem] bg-[#0F7663]/20 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-900 border border-neutral-800 text-xs font-semibold text-neutral-300 tracking-wider uppercase">
-            <span className="w-2 h-2 rounded-full bg-[#ff2a2a]" />
+            <span className="w-2 h-2 rounded-full bg-[#22D3EE]" />
             Portfolio Showcase
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white">
@@ -36,8 +36,8 @@ export default function Projects() {
               transition={{ duration: 0.6, delay: idx * 0.15 }}
               className={`rounded-2xl p-8 flex flex-col justify-between transition-all duration-300 relative group ${
                 project.isFlagship
-                  ? 'bg-gradient-to-b from-neutral-900/90 to-[#0a0a0a] border-2 border-[#ff2a2a]/50 shadow-2xl shadow-[#ff2a2a]/10'
-                  : 'bg-[#0a0a0a] border border-neutral-800/80 hover:border-neutral-700 shadow-xl'
+                  ? 'bg-gradient-to-b from-neutral-900/90 to-[#0a0a0a] border-2 border-[#22D3EE]/50 shadow-2xl shadow-[#22D3EE]/10'
+                  : 'bg-[#0a0a0a] border border-neutral-800/80 hover:border-[#22D3EE]/40 shadow-xl'
               }`}
             >
               <div>
@@ -47,14 +47,14 @@ export default function Projects() {
                     Project {project.number}
                   </span>
                   {project.badge && (
-                    <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#ff2a2a]/20 text-[#ff2a2a] border border-[#ff2a2a]/40 flex items-center gap-1.5 shadow-sm">
+                    <span className="px-3 py-1 rounded-full text-xs font-bold bg-[#0F7663]/30 text-[#22D3EE] border border-[#22D3EE]/40 flex items-center gap-1.5 shadow-sm">
                       {project.badge}
                     </span>
                   )}
                 </div>
 
                 {/* Project Title */}
-                <h3 className="text-2xl sm:text-3xl font-extrabold text-white mb-4 group-hover:text-[#ff2a2a] transition-colors">
+                <h3 className="text-2xl sm:text-3xl font-extrabold text-white mb-4 group-hover:text-[#22D3EE] transition-colors">
                   {project.title}
                 </h3>
 
@@ -83,7 +83,7 @@ export default function Projects() {
                   href={project.links.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-neutral-900 border border-neutral-800 text-xs font-semibold text-white hover:bg-[#ff2a2a] hover:border-[#ff2a2a] transition-all duration-200"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-neutral-900 border border-neutral-800 text-xs font-semibold text-white hover:bg-[#22D3EE] hover:text-black hover:border-[#22D3EE] transition-all duration-200"
                 >
                   <svg
                     className="w-4 h-4"
@@ -105,7 +105,7 @@ export default function Projects() {
                     href={project.links.demo}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#ff2a2a] hover:underline"
+                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#22D3EE] hover:underline"
                   >
                     Live Demo &rarr;
                   </a>

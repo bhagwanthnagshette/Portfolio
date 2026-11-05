@@ -17,7 +17,7 @@ export default function Experience() {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-xs font-semibold text-neutral-700 tracking-wider uppercase">
-            <span className="w-2 h-2 rounded-full bg-[#ff2a2a]" />
+            <span className="w-2 h-2 rounded-full bg-[#0F7663]" />
             Background &amp; Growth
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-black">
@@ -35,7 +35,7 @@ export default function Experience() {
             {/* Experience / Internship */}
             <div>
               <h3 className="text-xl font-extrabold text-black mb-6 flex items-center gap-2.5">
-                <span className="w-3 h-3 rounded-full bg-[#ff2a2a]" />
+                <span className="w-3 h-3 rounded-full bg-[#0F7663]" />
                 Industry Training &amp; Experience
               </h3>
 
@@ -47,7 +47,7 @@ export default function Experience() {
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.5 }}
-                    className="p-6 rounded-2xl bg-neutral-50 border border-neutral-200 shadow-sm relative group hover:border-black transition-colors"
+                    className="p-6 rounded-2xl bg-neutral-50 border border-neutral-200 shadow-sm relative group hover:border-[#0F7663] transition-colors"
                   >
                     <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
                       <h4 className="text-lg font-bold text-black">
@@ -58,7 +58,7 @@ export default function Experience() {
                       </span>
                     </div>
 
-                    <p className="text-sm font-semibold text-[#ff2a2a] mb-4">
+                    <p className="text-sm font-semibold text-[#0F7663] mb-4">
                       <a
                         href={academy.url}
                         target="_blank"
@@ -76,7 +76,7 @@ export default function Experience() {
                           key={sIdx}
                           className="text-sm text-neutral-700 flex items-start gap-2"
                         >
-                          <span className="text-[#ff2a2a] font-bold">&rsaquo;</span>
+                          <span className="text-[#0F7663] font-bold">&rsaquo;</span>
                           <span>{skill}</span>
                         </li>
                       ))}
@@ -121,7 +121,7 @@ export default function Experience() {
                       href={certificates.viewAllUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-xs font-semibold text-[#ff2a2a] hover:underline"
+                      className="text-xs font-semibold text-[#0F7663] hover:text-[#22D3EE] hover:underline transition-colors"
                     >
                       Verify &rarr;
                     </a>
@@ -136,12 +136,12 @@ export default function Experience() {
             {/* Education Card */}
             <div>
               <h3 className="text-xl font-extrabold text-black mb-6 flex items-center gap-2.5">
-                <span className="w-3 h-3 rounded-full bg-[#ff2a2a]" />
+                <span className="w-3 h-3 rounded-full bg-[#0F7663]" />
                 Education
               </h3>
 
               <div className="p-6 rounded-2xl bg-neutral-50 border border-neutral-200 shadow-sm space-y-3">
-                <span className="text-xs font-mono font-bold text-[#ff2a2a] uppercase tracking-wider">
+                <span className="text-xs font-mono font-bold text-[#0F7663] uppercase tracking-wider">
                   Undergraduate Degree
                 </span>
                 <h4 className="text-xl font-bold text-black">

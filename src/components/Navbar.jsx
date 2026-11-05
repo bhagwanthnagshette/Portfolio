@@ -22,7 +22,7 @@ export default function Navbar() {
     <nav
       className={`fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300 ${
         isOpen
-          ? 'bg-[#ff2a2a] py-4'
+          ? 'bg-[#0F7663] py-4'
           : isScrolled
           ? 'bg-black/90 backdrop-blur-md border-b border-neutral-900/80 shadow-lg py-4'
           : 'bg-transparent py-6'
@@ -32,7 +32,7 @@ export default function Navbar() {
         {/* Left: Logo */}
         <a href="#" className="text-white text-2xl font-black">
           {personalInfo.brandName}
-          <span className="text-[#ff2a2a]">.</span>
+          <span className="text-[#22D3EE]">.</span>
         </a>
 
         {/* Centre: Desktop Links */}
@@ -44,7 +44,7 @@ export default function Navbar() {
               className="group relative text-white/80 hover:text-white font-medium transition-colors"
             >
               {link}
-              <span className="absolute -bottom-1 left-0 h-0.5 bg-red-500 w-0 group-hover:w-full transition-all duration-300" />
+              <span className="absolute -bottom-1 left-0 h-0.5 bg-[#22D3EE] w-0 group-hover:w-full transition-all duration-300 shadow-[0_0_8px_#22D3EE]" />
             </a>
           ))}
         </div>
@@ -53,7 +53,7 @@ export default function Navbar() {
         <div className="hidden md:block">
           <a
             href={hireMeMailto}
-            className="px-6 py-2.5 rounded-full bg-white/10 border border-white/20 text-white font-semibold backdrop-blur-md hover:bg-white/20 hover:shadow-[0_0_15px_rgba(255,255,255,0.3)] transition-all duration-300 inline-block"
+            className="px-6 py-2.5 rounded-full bg-white/10 border border-[#22D3EE]/30 text-white font-semibold backdrop-blur-md hover:bg-[#22D3EE] hover:text-black hover:border-[#22D3EE] hover:shadow-[0_0_20px_rgba(34,211,238,0.4)] transition-all duration-300 inline-block"
           >
             Hire Me
           </a>
@@ -95,7 +95,7 @@ export default function Navbar() {
 
       {/* Mobile Dropdown Panel */}
       <div
-        className={`absolute top-full left-0 right-0 w-full bg-[#ff2a2a] shadow-2xl overflow-hidden transition-all duration-300 md:hidden ${
+        className={`absolute top-full left-0 right-0 w-full bg-[#0F7663] shadow-2xl overflow-hidden transition-all duration-300 md:hidden ${
           isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0 pointer-events-none'
         }`}
       >
@@ -105,7 +105,7 @@ export default function Navbar() {
               key={link}
               href={`#${link.toLowerCase()}`}
               onClick={() => setIsOpen(false)}
-              className="py-3 text-white font-bold text-lg border-b border-white/20 hover:text-black transition-colors"
+              className="py-3 text-white font-bold text-lg border-b border-white/20 hover:text-[#22D3EE] transition-colors"
             >
               {link}
             </a>
@@ -114,7 +114,7 @@ export default function Navbar() {
             <a
               href={hireMeMailto}
               onClick={() => setIsOpen(false)}
-              className="block w-full py-3 text-center bg-white text-[#ff2a2a] font-bold rounded-full shadow-md hover:bg-neutral-100 transition-colors"
+              className="block w-full py-3 text-center bg-[#22D3EE] text-black font-bold rounded-full shadow-md hover:bg-white transition-colors"
             >
               Hire Me
             </a>

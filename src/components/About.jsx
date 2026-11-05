@@ -15,7 +15,7 @@ export default function About() {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-3">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-neutral-100 border border-neutral-200 text-xs font-semibold text-neutral-700 tracking-wider uppercase">
-            <span className="w-2 h-2 rounded-full bg-[#ff2a2a]" />
+            <span className="w-2 h-2 rounded-full bg-[#0F7663]" />
             About Me
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-black">
@@ -38,7 +38,7 @@ export default function About() {
           >
             <div className="relative group w-full max-w-md">
               {/* Decorative Accent Background Glow */}
-              <div className="absolute -inset-2 bg-gradient-to-tr from-[#ff2a2a] to-black rounded-3xl opacity-20 blur-lg group-hover:opacity-30 transition-opacity" />
+              <div className="absolute -inset-2 bg-gradient-to-tr from-[#0F7663] via-[#22D3EE] to-black rounded-3xl opacity-20 blur-lg group-hover:opacity-35 transition-opacity" />
 
               <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden border-4 border-black bg-neutral-950 shadow-2xl flex items-center justify-center">
                 <img
@@ -61,13 +61,13 @@ export default function About() {
                     {/* FRONT: ID Badge */}
                     <div className="w-full bg-black/95 backdrop-blur-md rounded-xl p-3 border border-neutral-800 text-white flex items-center justify-between [backface-visibility:hidden] shadow-2xl">
                       <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-full bg-[#ff2a2a]/20 border border-[#ff2a2a]/40 flex items-center justify-center text-[#ff2a2a] font-bold text-xs uppercase">
+                        <div className="w-9 h-9 rounded-full bg-[#0F7663]/30 border border-[#22D3EE]/50 flex items-center justify-center text-[#22D3EE] font-bold text-xs uppercase">
                           {personalInfo.firstName.slice(0, 2)}
                         </div>
                         <div>
                           <p className="text-xs font-bold text-white flex items-center gap-1.5">
                             {personalInfo.name}
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#22D3EE]" />
                           </p>
                           <p className="text-[10px] text-neutral-400">
                             Trained at{' '}
@@ -76,7 +76,7 @@ export default function About() {
                               target="_blank"
                               rel="noopener noreferrer"
                               onClick={(e) => e.stopPropagation()}
-                              className="text-[#ff2a2a] font-semibold hover:underline"
+                              className="text-[#0F7663] font-semibold hover:underline"
                             >
                               {academy.name}
                             </a>
@@ -84,7 +84,7 @@ export default function About() {
                         </div>
                       </div>
                       <div className="text-right">
-                        <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#ff2a2a]/20 text-[#ff2a2a] border border-[#ff2a2a]/30 font-bold block mb-0.5">
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#0F7663]/30 text-[#22D3EE] border border-[#22D3EE]/40 font-bold block mb-0.5">
                           TAP-ID
                         </span>
                         <span className="text-[9px] text-neutral-400 flex items-center justify-end gap-1">
@@ -94,10 +94,10 @@ export default function About() {
                     </div>
 
                     {/* BACK: Visiting Card */}
-                    <div className="absolute inset-0 w-full h-full bg-neutral-900/95 backdrop-blur-md rounded-xl p-3 border border-[#ff2a2a]/50 text-white flex items-center justify-between [transform:rotateY(180deg)] [backface-visibility:hidden] shadow-2xl">
+                    <div className="absolute inset-0 w-full h-full bg-neutral-900/95 backdrop-blur-md rounded-xl p-3 border border-[#22D3EE]/50 text-white flex items-center justify-between [transform:rotateY(180deg)] [backface-visibility:hidden] shadow-2xl">
                       <div>
                         <p className="text-xs font-black text-white">{personalInfo.brandName}</p>
-                        <p className="text-[10px] text-[#ff2a2a] font-semibold">{personalInfo.title}</p>
+                        <p className="text-[10px] text-[#22D3EE] font-semibold">{personalInfo.title}</p>
                         <p className="text-[9px] text-neutral-400">{personalInfo.location}</p>
                       </div>
                       <div className="text-right">
@@ -105,7 +105,7 @@ export default function About() {
                           {personalInfo.emails.primary}
                         </p>
                         <p className="text-[10px] text-neutral-400 font-mono">{personalInfo.phone}</p>
-                        <span className="text-[9px] text-[#ff2a2a] font-bold flex items-center justify-end gap-1 mt-0.5">
+                        <span className="text-[9px] text-[#22D3EE] font-bold flex items-center justify-end gap-1 mt-0.5">
                           Flip ↺
                         </span>
                       </div>
@@ -159,7 +159,7 @@ export default function About() {
                 {aboutContent.techStack.map((tech) => (
                   <span
                     key={tech}
-                    className="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 text-white shadow-sm hover:bg-[#ff2a2a] transition-colors duration-200"
+                    className="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-neutral-900 text-white shadow-sm hover:bg-[#0F7663] hover:text-[#22D3EE] transition-colors duration-200"
                   >
                     {tech}
                   </span>

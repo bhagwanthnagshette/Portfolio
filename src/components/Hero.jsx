@@ -67,7 +67,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative w-full h-screen overflow-hidden bg-[#ff2a2a]"
+      className="relative w-full h-screen overflow-hidden bg-[#0F7663]"
     >
       {/* ── Background video – object-contain so full portrait/face is always visible ── */}
       <video
@@ -81,7 +81,7 @@ export default function Hero() {
       </video>
 
       {/* ── Readability gradient overlay ── */}
-      <div className="absolute inset-0 z-10 pointer-events-none bg-gradient-to-r from-black/45 via-black/10 to-transparent" />
+      <div className="absolute inset-0 z-10 pointer-events-none bg-gradient-to-r from-black/60 via-black/25 to-transparent" />
 
       {/* ── Fixed left social bar (desktop only) ── */}
       <div className="hidden lg:flex fixed left-6 top-1/2 -translate-y-1/2 z-50 flex-col items-center gap-5 mix-blend-difference">
@@ -92,7 +92,7 @@ export default function Hero() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={label}
-            className="text-white/60 hover:text-white hover:scale-125 transition-all duration-200"
+            className="text-white/60 hover:text-[#22D3EE] hover:scale-125 transition-all duration-200"
           >
             {icon}
           </a>
@@ -114,7 +114,7 @@ export default function Hero() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
-                className="text-white/60 hover:text-white hover:scale-125 transition-all duration-200"
+                className="text-white/60 hover:text-[#22D3EE] hover:scale-125 transition-all duration-200"
               >
                 {icon}
               </a>
@@ -128,12 +128,14 @@ export default function Hero() {
           >
             {heroContent.greeting},
             <br />
-            <span className="text-black">{heroContent.titleHighlight}</span>
+            <span className="text-[#22D3EE] font-black drop-shadow-[0_0_25px_rgba(34,211,238,0.45)]">
+              {heroContent.titleHighlight}
+            </span>
           </h1>
 
           {/* Subtitle */}
           <p
-            className="text-white text-sm md:text-lg font-semibold max-w-md mb-6 leading-relaxed"
+            className="text-white/90 text-sm md:text-lg font-medium max-w-md mb-6 leading-relaxed"
             data-aos="fade-up"
             data-aos-delay="200"
           >
@@ -149,7 +151,7 @@ export default function Hero() {
             {/* Primary */}
             <a
               href={heroContent.ctaPrimary.href}
-              className="px-5 py-2.5 rounded-full bg-white text-black font-semibold text-sm hover:scale-105 transition-transform shadow-lg"
+              className="px-6 py-2.5 rounded-full bg-[#22D3EE] text-neutral-950 font-bold text-sm hover:scale-105 hover:bg-white hover:shadow-[0_0_25px_rgba(34,211,238,0.6)] transition-all shadow-lg"
             >
               {heroContent.ctaPrimary.text}
             </a>
@@ -157,7 +159,7 @@ export default function Hero() {
             {/* Secondary */}
             <a
               href={heroContent.ctaSecondary.href}
-              className="px-5 py-2.5 rounded-full bg-black/40 border border-white text-white font-semibold text-sm backdrop-blur-md hover:bg-black/60 transition-colors"
+              className="px-5 py-2.5 rounded-full bg-black/40 border border-[#22D3EE]/40 text-white font-semibold text-sm backdrop-blur-md hover:border-[#22D3EE] hover:bg-black/60 transition-colors"
             >
               {heroContent.ctaSecondary.text}
             </a>
@@ -167,7 +169,7 @@ export default function Hero() {
               <a
                 href={heroContent.ctaResume.href}
                 download
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/50 text-white font-semibold text-sm hover:bg-white/10 transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/50 text-white font-semibold text-sm hover:border-[#22D3EE] hover:text-[#22D3EE] transition-colors"
               >
                 {/* Download-document icon */}
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -191,7 +193,7 @@ export default function Hero() {
             type="button"
             onClick={toggleVideo}
             aria-label={isPlaying ? 'Pause reel' : 'Play reel'}
-            className="w-12 h-12 md:w-20 md:h-20 rounded-full border border-white/30 bg-black/20 backdrop-blur-md flex items-center justify-center hover:scale-110 hover:bg-[#ff2a2a] hover:shadow-[0_0_30px_rgba(255,42,42,0.6)] transition-all duration-300"
+            className="w-12 h-12 md:w-20 md:h-20 rounded-full border border-white/30 bg-black/20 backdrop-blur-md flex items-center justify-center hover:scale-110 hover:bg-[#22D3EE] hover:text-black hover:shadow-[0_0_30px_rgba(34,211,238,0.7)] transition-all duration-300"
           >
             {isPlaying ? (
               /* Pause icon */

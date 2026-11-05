@@ -21,7 +21,7 @@ export default function Footer() {
               className="text-2xl font-black tracking-tight text-white hover:text-neutral-300 transition-colors inline-block"
             >
               {personalInfo.brandName}
-              <span className="text-[#ff2a2a]">.</span>
+              <span className="text-[#22D3EE]">.</span>
             </a>
             <p className="text-sm text-neutral-400 max-w-sm">
               {footerContent.taglines.join(' • ')}
@@ -42,7 +42,7 @@ export default function Footer() {
                 <a
                   key={link.name}
                   href={link.href}
-                  className="text-sm text-neutral-400 hover:text-[#ff2a2a] transition-colors"
+                  className="text-sm text-neutral-400 hover:text-[#22D3EE] transition-colors"
                 >
                   {link.name}
                 </a>
@@ -76,7 +76,7 @@ export default function Footer() {
                 href={personalInfo.resumeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm text-[#ff2a2a] hover:underline font-semibold"
+                className="text-sm text-[#22D3EE] hover:underline font-semibold"
               >
                 Resume
               </a>
@@ -95,7 +95,7 @@ export default function Footer() {
               href={academy.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-neutral-300 hover:text-[#ff2a2a] font-semibold transition-colors underline"
+              className="text-neutral-300 hover:text-[#22D3EE] font-semibold transition-colors underline"
             >
               {academy.name}
             </a>
