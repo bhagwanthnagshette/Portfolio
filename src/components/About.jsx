@@ -1,8 +1,11 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { aboutContent, academy, personalInfo } from '../data/portfolioData'
 import profileImg from '../assets/about/profile.png'
 
 export default function About() {
+  const [isFlipped, setIsFlipped] = useState(false)
+
   return (
     <section
       id="about"
@@ -44,24 +47,70 @@ export default function About() {
                   className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
                 />
 
-                {/* Training Badge Overlay */}
-                <div className="absolute bottom-3 left-3 right-3 bg-black/90 backdrop-blur-md rounded-xl p-3 border border-neutral-800 text-white flex items-center justify-between">
-                  <div>
-                    <p className="text-[10px] uppercase font-bold text-[#ff2a2a] tracking-wider">
-                      Trained At
-                    </p>
-                    <a
-                      href={academy.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs font-semibold hover:text-[#ff2a2a] transition-colors underline"
-                    >
-                      {academy.name}
-                    </a>
+                {/* Flippable ID Badge / Visiting Card Overlay */}
+                <div
+                  className="absolute bottom-3 left-3 right-3 cursor-pointer select-none [perspective:1000px]"
+                  onClick={() => setIsFlipped(!isFlipped)}
+                  title="Click to flip ID badge"
+                >
+                  <div
+                    className={`relative transition-transform duration-700 [transform-style:preserve-3d] ${
+                      isFlipped ? '[transform:rotateY(180deg)]' : ''
+                    }`}
+                  >
+                    {/* FRONT: ID Badge */}
+                    <div className="w-full bg-black/95 backdrop-blur-md rounded-xl p-3 border border-neutral-800 text-white flex items-center justify-between [backface-visibility:hidden] shadow-2xl">
+                      <div className="flex items-center gap-3">
+                        <div className="w-9 h-9 rounded-full bg-[#ff2a2a]/20 border border-[#ff2a2a]/40 flex items-center justify-center text-[#ff2a2a] font-bold text-xs uppercase">
+                          {personalInfo.firstName.slice(0, 2)}
+                        </div>
+                        <div>
+                          <p className="text-xs font-bold text-white flex items-center gap-1.5">
+                            {personalInfo.name}
+                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                          </p>
+                          <p className="text-[10px] text-neutral-400">
+                            Trained at{' '}
+                            <a
+                              href={academy.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={(e) => e.stopPropagation()}
+                              className="text-[#ff2a2a] font-semibold hover:underline"
+                            >
+                              {academy.name}
+                            </a>
+                          </p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#ff2a2a]/20 text-[#ff2a2a] border border-[#ff2a2a]/30 font-bold block mb-0.5">
+                          TAP-ID
+                        </span>
+                        <span className="text-[9px] text-neutral-400 flex items-center justify-end gap-1">
+                          Flip ↺
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* BACK: Visiting Card */}
+                    <div className="absolute inset-0 w-full h-full bg-neutral-900/95 backdrop-blur-md rounded-xl p-3 border border-[#ff2a2a]/50 text-white flex items-center justify-between [transform:rotateY(180deg)] [backface-visibility:hidden] shadow-2xl">
+                      <div>
+                        <p className="text-xs font-black text-white">{personalInfo.brandName}</p>
+                        <p className="text-[10px] text-[#ff2a2a] font-semibold">{personalInfo.title}</p>
+                        <p className="text-[9px] text-neutral-400">{personalInfo.location}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-[10px] text-neutral-200 font-mono truncate max-w-[140px]">
+                          {personalInfo.emails.primary}
+                        </p>
+                        <p className="text-[10px] text-neutral-400 font-mono">{personalInfo.phone}</p>
+                        <span className="text-[9px] text-[#ff2a2a] font-bold flex items-center justify-end gap-1 mt-0.5">
+                          Flip ↺
+                        </span>
+                      </div>
+                    </div>
                   </div>
-                  <span className="text-xs bg-[#ff2a2a]/20 text-[#ff2a2a] font-bold px-2 py-0.5 rounded-full border border-[#ff2a2a]/30">
-                    Full Stack
-                  </span>
                 </div>
               </div>
             </div>
