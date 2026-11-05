@@ -3,7 +3,7 @@ import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import About from './components/About'
 import TechnicalSkills from './components/TechnicalSkills'
-import Process from './components/Process'
+import Services from './components/Services'
 import Projects from './components/Projects'
 import Experience from './components/Experience'
 import Contact from './components/Contact'
@@ -18,7 +18,7 @@ function App() {
         <Hero />
         <About />
         <TechnicalSkills />
-        <Process />
+        <Services />
         <Projects />
         <Experience />
         <Contact />
