@@ -23,7 +23,9 @@ export default function Navbar() {
       className={`fixed top-0 left-0 right-0 w-full z-50 transition-all duration-300 ${
         isOpen
           ? 'bg-[#ff2a2a] py-4'
-          : `bg-transparent ${isScrolled ? 'py-4' : 'py-6'}`
+          : isScrolled
+          ? 'bg-black/90 backdrop-blur-md border-b border-neutral-900/80 shadow-lg py-4'
+          : 'bg-transparent py-6'
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
