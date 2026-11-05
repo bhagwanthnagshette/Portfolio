@@ -1,8 +1,7 @@
-import { useRef, useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
-import heroVideo from '../assets/hero/hero.mp4'
-import heroPoster from '../assets/about/profile.png'
+import heroImage from '../assets/hero/hero.jpg'
 import { heroContent, socialLinks } from '../data/portfolioData'
 
 // ── inline SVG icons ──────────────────────────────────────────────────────────
@@ -38,8 +37,6 @@ const socials = [
 ].filter((s) => s.href) // skip empty links (e.g. instagram not provided)
 
 export default function Hero() {
-  const videoRef = useRef(null)
-  const [isPlaying, setIsPlaying] = useState(false)
 
   // AOS init – runs once; also refresh on window load so layout shifts are captured
   useEffect(() => {
@@ -50,38 +47,20 @@ export default function Hero() {
     return () => window.removeEventListener('load', handleLoad)
   }, [])
 
-  // Toggle video play / pause
-  const toggleVideo = (e) => {
-    e.stopPropagation()
-    const video = videoRef.current
-    if (!video) return
-    if (video.paused) {
-      video.play()
-      setIsPlaying(true)
-    } else {
-      video.pause()
-      setIsPlaying(false)
-    }
-  }
-
   return (
     <section
       id="home"
-      className="relative w-full h-screen overflow-hidden bg-[#0F7663]"
+      className="relative w-full h-screen overflow-hidden bg-[#017c7a]"
     >
-      {/* ── Background video – object-contain so full portrait/face is always visible ── */}
-      <video
-        ref={videoRef}
-        className="absolute inset-0 w-full h-full object-contain object-top md:object-right z-0"
-        playsInline
-        poster={heroPoster}
-        onEnded={() => setIsPlaying(false)}
-      >
-        <source src={heroVideo} type="video/mp4" />
-      </video>
+      {/* ── Background hero photo – object-contain so it preserves aspect ratio and never stretches ── */}
+      <img
+        src={heroImage}
+        alt="Bhagwanth — Python Full Stack Developer"
+        className="absolute inset-0 w-full h-full object-contain object-bottom md:object-right-bottom z-0 select-none pointer-events-none"
+      />
 
       {/* ── Readability gradient overlay ── */}
-      <div className="absolute inset-0 z-10 pointer-events-none bg-gradient-to-r from-black/60 via-black/25 to-transparent" />
+      <div className="absolute inset-0 z-10 pointer-events-none bg-gradient-to-t from-black/80 via-black/40 to-transparent md:bg-gradient-to-r md:from-black/70 md:via-black/30 md:to-transparent" />
 
       {/* ── Fixed left social bar (desktop only) ── */}
       <div className="hidden lg:flex fixed left-6 top-1/2 -translate-y-1/2 z-50 flex-col items-center gap-5 mix-blend-difference">
@@ -182,35 +161,6 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* ── Right: Play / Pause reel control ── */}
-        <div
-          className="mt-10 md:mt-0 flex flex-col items-center gap-2 cursor-pointer select-none"
-          data-aos="zoom-in"
-          data-aos-delay="600"
-          onClick={toggleVideo}
-        >
-          <button
-            type="button"
-            onClick={toggleVideo}
-            aria-label={isPlaying ? 'Pause reel' : 'Play reel'}
-            className="w-12 h-12 md:w-20 md:h-20 rounded-full border border-white/30 bg-black/20 backdrop-blur-md flex items-center justify-center hover:scale-110 hover:bg-[#22D3EE] hover:text-black hover:shadow-[0_0_30px_rgba(34,211,238,0.7)] transition-all duration-300"
-          >
-            {isPlaying ? (
-              /* Pause icon */
-              <svg className="w-5 h-5 md:w-7 md:h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
-              </svg>
-            ) : (
-              /* Play triangle */
-              <svg className="w-5 h-5 md:w-7 md:h-7 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            )}
-          </button>
-          <span className="text-white text-[10px] md:text-xs uppercase tracking-widest font-semibold">
-            {isPlaying ? 'Pause' : 'Play Reel'}
-          </span>
-        </div>
       </div>
 
       {/* ── Bottom-centre bounce scroll arrow ── */}
