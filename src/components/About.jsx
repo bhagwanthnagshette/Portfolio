@@ -43,7 +43,7 @@ export default function About() {
               <div className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden border-4 border-black bg-neutral-950 shadow-2xl flex items-center justify-center">
                 <img
                   src={profileImg}
-                  alt={personalInfo.name}
+                  alt="Bhagwanth ` — Python Full Stack Developer, TAP Academy student"
                   className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105"
                 />
 
