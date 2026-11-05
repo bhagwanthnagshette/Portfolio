@@ -987,8 +987,47 @@ function SplashCursor({
       clickSplat(pointer);
     }
 
+    let lastClientX = window.innerWidth / 2;
+    let lastClientY = window.innerHeight / 2;
+
+    function checkLightBackground(x, y) {
+      if (!canvas) return;
+      const el = document.elementFromPoint(x, y);
+      let isLight = false;
+      let curr = el;
+      while (curr && curr !== document.body && curr !== document.documentElement) {
+        if (curr.id === 'about' || curr.id === 'process' || curr.id === 'experience') {
+          isLight = true;
+          break;
+        }
+        const bg = window.getComputedStyle(curr).backgroundColor;
+        if (bg && bg !== 'rgba(0, 0, 0, 0)' && bg !== 'transparent') {
+          const match = bg.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+          if (match) {
+            const r = parseInt(match[1], 10);
+            const g = parseInt(match[2], 10);
+            const b = parseInt(match[3], 10);
+            const lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+            if (lum > 0.6) {
+              isLight = true;
+              break;
+            } else if (lum < 0.4) {
+              isLight = false;
+              break;
+            }
+          }
+        }
+        curr = curr.parentElement;
+      }
+      canvas.style.mixBlendMode = isLight ? 'difference' : 'normal';
+    }
+
     let firstMouseMoveHandled = false;
     function handleMouseMove(e) {
+      lastClientX = e.clientX;
+      lastClientY = e.clientY;
+      checkLightBackground(e.clientX, e.clientY);
+
       let pointer = pointers[0];
       let posX = scaleByPixelRatio(e.clientX);
       let posY = scaleByPixelRatio(e.clientY);
@@ -1001,9 +1040,26 @@ function SplashCursor({
       }
     }
 
+    function handleMouseDown(e) {
+      lastClientX = e.clientX;
+      lastClientY = e.clientY;
+      checkLightBackground(e.clientX, e.clientY);
+
+      let pointer = pointers[0];
+      let posX = scaleByPixelRatio(e.clientX);
+      let posY = scaleByPixelRatio(e.clientY);
+      updatePointerDownData(pointer, -1, posX, posY);
+      clickSplat(pointer);
+    }
+
     function handleTouchStart(e) {
       const touches = e.targetTouches;
       let pointer = pointers[0];
+      if (touches.length > 0) {
+        lastClientX = touches[0].clientX;
+        lastClientY = touches[0].clientY;
+        checkLightBackground(lastClientX, lastClientY);
+      }
       for (let i = 0; i < touches.length; i++) {
         let posX = scaleByPixelRatio(touches[i].clientX);
         let posY = scaleByPixelRatio(touches[i].clientY);
@@ -1014,6 +1070,11 @@ function SplashCursor({
     function handleTouchMove(e) {
       const touches = e.targetTouches;
       let pointer = pointers[0];
+      if (touches.length > 0) {
+        lastClientX = touches[0].clientX;
+        lastClientY = touches[0].clientY;
+        checkLightBackground(lastClientX, lastClientY);
+      }
       for (let i = 0; i < touches.length; i++) {
         let posX = scaleByPixelRatio(touches[i].clientX);
         let posY = scaleByPixelRatio(touches[i].clientY);
@@ -1029,9 +1090,14 @@ function SplashCursor({
       }
     }
 
+    function handleScroll() {
+      checkLightBackground(lastClientX, lastClientY);
+    }
+
     // Add event listeners
     window.addEventListener('mousedown', handleMouseDown);
     window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('touchstart', handleTouchStart);
     window.addEventListener('touchmove', handleTouchMove, { passive: true });
     window.addEventListener('touchend', handleTouchEnd);
@@ -1051,6 +1117,7 @@ function SplashCursor({
       // Remove event listeners
       window.removeEventListener('mousedown', handleMouseDown);
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('touchstart', handleTouchStart);
       window.removeEventListener('touchmove', handleTouchMove);
       window.removeEventListener('touchend', handleTouchEnd);
