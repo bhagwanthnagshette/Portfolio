@@ -94,7 +94,7 @@ export default function Contact() {
       {/* In front: Teal Card aligned to the right */}
       <div
         data-aos="fade-up"
-        className="bg-[#0F7663] w-full md:w-[85%] lg:w-[75%] p-8 md:p-16 ml-auto rounded-tl-3xl shadow-2xl relative z-10 text-white"
+        className="bg-[#0F7663] w-full md:w-[85%] lg:w-[75%] p-6 sm:p-8 md:p-16 ml-auto rounded-tl-3xl shadow-2xl relative z-10 text-white"
       >
         {/* Header row */}
         <div className="flex flex-wrap items-center justify-between gap-4 pb-8 border-b border-white/20">

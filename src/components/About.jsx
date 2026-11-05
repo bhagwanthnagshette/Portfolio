@@ -51,14 +51,14 @@ export default function About() {
   return (
     <section
       id="about"
-      className="bg-[#0F7663] pt-20 pb-40 px-6 md:px-12 relative overflow-hidden"
+      className="bg-[#0F7663] pt-16 md:pt-20 pb-28 md:pb-40 px-5 md:px-12 relative overflow-hidden"
     >
       {/* ── Inner two-column layout ── */}
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-16 items-start">
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row gap-10 md:gap-16 items-center md:items-start">
 
         {/* ── Left: ID badge on a lanyard ── */}
         <motion.div
-          className="md:w-[350px] shrink-0 flex flex-col items-center relative pt-32"
+          className="w-full md:w-[350px] shrink-0 flex flex-col items-center relative pt-24 md:pt-32"
           initial={{ y: -300, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true, amount: 0.15 }}
@@ -190,15 +190,15 @@ export default function About() {
           <p className="text-xs font-bold text-black/60 mt-4 select-none">
             Tap the card to flip ↻
           </p>
-          ``        </motion.div>
+        </motion.div>
 
         {/* ── Right: heading + bio ── */}
-        <div data-aos="fade-left" className="flex-1 pt-4 md:pt-12">
-          <h2 className="text-4xl md:text-5xl font-black text-black mb-6">
+        <div data-aos="fade-left" className="flex-1 pt-4 md:pt-12 text-center md:text-left">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-black mb-4 md:mb-6">
             {aboutContent.heading}
           </h2>
           <p
-            className="text-lg font-bold leading-relaxed text-teal-50"
+            className="text-base sm:text-lg font-bold leading-relaxed text-teal-50"
             dangerouslySetInnerHTML={{ __html: aboutContent.bio }}
           />
         </div>

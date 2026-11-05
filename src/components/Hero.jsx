@@ -34,10 +34,9 @@ const socials = [
   { href: socialLinks.github, icon: <GithubIcon />, label: 'GitHub' },
   { href: socialLinks.linkedin, icon: <LinkedinIcon />, label: 'LinkedIn' },
   { href: socialLinks.instagram, icon: <InstagramIcon />, label: 'Instagram' },
-].filter((s) => s.href) // skip empty links (e.g. instagram not provided)
+].filter((s) => s.href)
 
 export default function Hero() {
-
   // AOS init – runs once; also refresh on window load so layout shifts are captured
   useEffect(() => {
     AOS.init({ duration: 1000, once: true, easing: 'ease-out' })
@@ -50,17 +49,17 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative w-full h-screen overflow-hidden bg-[#017c7a]"
+      className="relative w-full min-h-screen md:h-screen overflow-hidden bg-[#017c7a] flex flex-col justify-between"
     >
-      {/* ── Background hero photo – object-contain so it preserves aspect ratio and never stretches ── */}
+      {/* ── Desktop Hero Photo (hidden on mobile, positioned cleanly on right half) ── */}
       <img
         src={heroImage}
-        alt="Bhagwanth — Python Full Stack Developer"
-        className="absolute inset-0 w-full h-full object-contain object-bottom md:object-right-bottom z-0 select-none pointer-events-none"
+        alt={`${heroContent.greeting} - ${heroContent.titleHighlight}`}
+        className="hidden md:block absolute right-0 bottom-0 w-[55%] lg:w-[50%] h-full object-contain object-right-bottom z-0 select-none pointer-events-none"
       />
 
-      {/* ── Readability gradient overlay ── */}
-      <div className="absolute inset-0 z-10 pointer-events-none bg-gradient-to-t from-black/80 via-black/40 to-transparent md:bg-gradient-to-r md:from-black/70 md:via-black/30 md:to-transparent" />
+      {/* ── Desktop Readability Gradient Overlay ── */}
+      <div className="hidden md:block absolute inset-0 z-10 pointer-events-none bg-gradient-to-r from-[#017c7a] via-[#017c7a]/70 to-transparent w-2/3" />
 
       {/* ── Fixed left social bar (desktop only) ── */}
       <div className="hidden lg:flex fixed left-6 top-1/2 -translate-y-1/2 z-50 flex-col items-center gap-5 mix-blend-difference">
@@ -78,14 +77,16 @@ export default function Hero() {
         ))}
       </div>
 
-      {/* ── Main content container ── */}
-      <div className="absolute inset-0 z-20 max-w-7xl mx-auto px-6 md:px-12 pb-20 md:pb-[8%] flex flex-col md:flex-row justify-end md:justify-between items-start md:items-end">
-
-        {/* Left content block */}
-        <div className="max-w-2xl">
+      {/* ── Main Content Container ── */}
+      {/* On desktop: anchored at bottom-left with pb-[8%] */}
+      {/* On mobile: top-flowing with pt-24 pb-4, leaving room for the photo below */}
+      <div className="relative z-20 max-w-7xl mx-auto w-full px-6 md:px-12 pt-24 md:pt-0 md:h-full md:flex md:flex-col md:justify-end md:pb-[8%]">
+        
+        {/* Text Content Block */}
+        <div className="max-w-xl lg:max-w-2xl">
 
           {/* Mobile inline social icons (lg:hidden) */}
-          <div className="flex items-center gap-4 mb-4 lg:hidden" data-aos="fade-up" data-aos-delay="100">
+          <div className="flex items-center gap-4 mb-3 sm:mb-4 lg:hidden" data-aos="fade-up" data-aos-delay="100">
             {socials.map(({ href, icon, label }) => (
               <a
                 key={label}
@@ -93,7 +94,7 @@ export default function Hero() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
-                className="text-white/60 hover:text-[#22D3EE] hover:scale-125 transition-all duration-200"
+                className="text-white/70 hover:text-[#22D3EE] hover:scale-110 transition-all duration-200"
               >
                 {icon}
               </a>
@@ -102,7 +103,7 @@ export default function Hero() {
 
           {/* Headline */}
           <h1
-            className="text-white text-3xl md:text-5xl font-bold leading-tight mb-4"
+            className="text-white text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight mb-3 sm:mb-4"
             data-aos="fade-up"
           >
             {heroContent.greeting},
@@ -114,7 +115,7 @@ export default function Hero() {
 
           {/* Subtitle */}
           <p
-            className="text-white/90 text-sm md:text-lg font-medium max-w-md mb-6 leading-relaxed"
+            className="text-white/90 text-sm sm:text-base md:text-lg font-medium max-w-lg mb-5 sm:mb-6 leading-relaxed"
             data-aos="fade-up"
             data-aos-delay="200"
           >
@@ -123,14 +124,14 @@ export default function Hero() {
 
           {/* CTA Buttons */}
           <div
-            className="flex flex-wrap items-center gap-3"
+            className="flex flex-wrap items-center gap-2.5 sm:gap-3 mb-6 md:mb-0"
             data-aos="fade-up"
             data-aos-delay="400"
           >
             {/* Primary */}
             <a
               href={heroContent.ctaPrimary.href}
-              className="px-6 py-2.5 rounded-full bg-[#22D3EE] text-neutral-950 font-bold text-sm hover:scale-105 hover:bg-white hover:shadow-[0_0_25px_rgba(34,211,238,0.6)] transition-all shadow-lg"
+              className="px-5 sm:px-6 py-2.5 rounded-full bg-[#22D3EE] text-neutral-950 font-bold text-xs sm:text-sm hover:scale-105 hover:bg-white hover:shadow-[0_0_25px_rgba(34,211,238,0.6)] transition-all shadow-lg"
             >
               {heroContent.ctaPrimary.text}
             </a>
@@ -138,19 +139,18 @@ export default function Hero() {
             {/* Secondary */}
             <a
               href={heroContent.ctaSecondary.href}
-              className="px-5 py-2.5 rounded-full bg-black/40 border border-[#22D3EE]/40 text-white font-semibold text-sm backdrop-blur-md hover:border-[#22D3EE] hover:bg-black/60 transition-colors"
+              className="px-4 sm:px-5 py-2.5 rounded-full bg-black/40 border border-[#22D3EE]/40 text-white font-semibold text-xs sm:text-sm backdrop-blur-md hover:border-[#22D3EE] hover:bg-black/60 transition-colors"
             >
               {heroContent.ctaSecondary.text}
             </a>
 
-            {/* Resume download — only if ctaResume is set */}
+            {/* Resume download */}
             {heroContent.ctaResume && heroContent.ctaResume.href && (
               <a
                 href={heroContent.ctaResume.href}
                 download
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/50 text-white font-semibold text-sm hover:border-[#22D3EE] hover:text-[#22D3EE] transition-colors"
+                className="inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-full border border-white/50 text-white font-semibold text-xs sm:text-sm hover:border-[#22D3EE] hover:text-[#22D3EE] transition-colors"
               >
-                {/* Download-document icon */}
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                     d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -160,10 +160,18 @@ export default function Hero() {
             )}
           </div>
         </div>
-
       </div>
 
-      {/* ── Bottom-centre bounce scroll arrow ── */}
+      {/* ── Mobile-Only Portrait Photo (positioned below text without overlapping) ── */}
+      <div className="md:hidden w-full flex justify-center items-end px-4 pt-2 z-10 select-none pointer-events-none">
+        <img
+          src={heroImage}
+          alt={`${heroContent.greeting} - ${heroContent.titleHighlight}`}
+          className="w-full max-w-[340px] sm:max-w-md h-auto object-contain rounded-2xl drop-shadow-2xl"
+        />
+      </div>
+
+      {/* ── Bottom-centre bounce scroll arrow (desktop only) ── */}
       <div className="hidden md:block absolute bottom-6 left-1/2 -translate-x-1/2 z-30 animate-bounce pointer-events-none">
         <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
